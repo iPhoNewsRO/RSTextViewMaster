@@ -74,8 +74,7 @@ func growingTextView(growingTextView: RSTextViewMaster, didChangeHeight height:C
 ```
 
 ## Author
-[Radu Ursache](https://github.com/iPhoNewsRO)
-Based on [JeaSungLEE](https://github.com/JeaSungLEE)'s [work](https://github.com/JeaSungLEE/TextViewMaster)
+RSTextViewMaster is based on [JeaSungLEE](https://github.com/JeaSungLEE)'s [work](https://github.com/JeaSungLEE/TextViewMaster)
 
 ## License
 RSTextViewMaster is available under the GNU license.
