@@ -18,19 +18,19 @@ import UIKit
 }
 
 public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
-    public var isAnimate: Bool = true                                          //에니메이션 사용여부
-    public var maxLength: Int = 0                                              //최대 글자수
-    public var minHeight: CGFloat = 0                                          //최소 높이 제한
-    public var maxHeight: CGFloat = 0                                          //최대 높이 제한
-
-    public var placeHolder: String = ""                                        //플레이스홀더
-    public var placeHolderFont: UIFont = UIFont.systemFont(ofSize: 17)         //플레이스홀더 폰트
-    public var placeHolderColor: UIColor = UIColor(white: 0.8, alpha: 1.0)     //플레이스홀더 컬러
-    public var placeHolderTopPadding: CGFloat = 0                              //플레이스홀더 위 여백
-    public var placeHolderBottomPadding: CGFloat = 0                           //플레이스홀더 아래 여백
-    public var placeHolderRightPadding: CGFloat = 5                            //플레이스홀더 오른쪽 여백
-    public var placeHolderLeftPadding: CGFloat = 5                             //플레이스홀더 왼쪽 여백
-
+    public var isAnimate: Bool = true
+    public var maxLength: Int = 0
+    public var minHeight: CGFloat = 0
+    public var maxHeight: CGFloat = 0
+    
+    public var placeHolder: String = ""
+    public var placeHolderFont: UIFont = UIFont.systemFont(ofSize: 17)
+    public var placeHolderColor: UIColor = UIColor(white: 0.8, alpha: 1.0)
+    public var placeHolderTopPadding: CGFloat = 0
+    public var placeHolderBottomPadding: CGFloat = 0
+    public var placeHolderRightPadding: CGFloat = 5
+    public var placeHolderLeftPadding: CGFloat = 5
+    
     private weak var heightConstraint: NSLayoutConstraint?
     private var previousRect = CGRect.zero
     
@@ -58,14 +58,16 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
         super.layoutSubviews()
         let height = self.checkHeightConstraint()
         self.setNewHieghtConstraintConstant(with: height)
-
+        
         if self.isAnimate {
             UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: { [weak self] in
                 guard let self = self, let delegate = self.delegate as? RSTextViewMasterDelegate else { return }
                 delegate.growingTextView?(growingTextView: self, willChangeHeight: height)
-                if self.heightConstraint?.constant != self.maxHeight {
+                
+                if self.isScrolling() {
                     self.scrollToBottom()
                 }
+                
             }) { [weak self] _ in
                 guard let self = self, let delegate = self.delegate as? RSTextViewMasterDelegate else { return }
                 delegate.growingTextView?(growingTextView: self, didChangeHeight: height)
@@ -73,9 +75,11 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
         } else {
             guard let delegate = delegate as? RSTextViewMasterDelegate else { return }
             delegate.growingTextView?(growingTextView: self, willChangeHeight: height)
-            if self.heightConstraint?.constant != self.maxHeight {
+            
+            if self.isScrolling() {
                 self.scrollToBottom()
             }
+            
             delegate.growingTextView?(growingTextView: self, didChangeHeight: height)
         }
     }
@@ -89,6 +93,14 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
 }
 
 extension RSTextViewMaster {
+    private func isScrolling() -> Bool {
+        if let constant = self.heightConstraint?.constant, constant < self.maxHeight + 1 {
+            return true
+        }
+        
+        return false
+    }
+    
     private func checkHeightConstraint() -> CGFloat {
         let height = self.getHeight()
         
@@ -98,7 +110,7 @@ extension RSTextViewMaster {
         
         return height
     }
-
+    
     private func setNewHieghtConstraintConstant(with constant: CGFloat) {
         guard constant != self.heightConstraint?.constant else { return }
         self.heightConstraint?.constant = constant
@@ -142,11 +154,11 @@ extension RSTextViewMaster {
         let width = rect.size.width - xValue - (textContainerInset.right + self.placeHolderRightPadding)
         let height = rect.size.height - yValue - (textContainerInset.bottom + self.placeHolderBottomPadding)
         let placeHolderRect = CGRect(x: xValue, y: yValue, width: width, height: height)
-
+        
         guard let gc = UIGraphicsGetCurrentContext() else { return }
         gc.saveGState()
         defer { gc.restoreGState() }
-
+        
         self.placeHolder.draw(in: placeHolderRect, withAttributes: getPlaceHolderAttribues())
     }
 }
@@ -172,7 +184,7 @@ extension RSTextViewMaster {
         let currentRect = self.caretRect(for: pos)
         self.previousRect = self.previousRect.origin.y == 0.0 ? currentRect : previousRect
         if (currentRect.origin.y > previousRect.origin.y) {
-            if self.heightConstraint?.constant == self.maxHeight {
+            if self.isScrolling() {
                 self.flashScrollIndicators()
             }
         }

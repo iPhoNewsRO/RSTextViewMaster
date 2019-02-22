@@ -1,6 +1,6 @@
 # RSTextViewMaster
 [![Version](https://img.shields.io/cocoapods/v/RSTextViewMaster.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
-[![License: MIT](https://img.shields.io/badge/license-GNU-blue.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-GNU-blue.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster/blob/master/LICENSE.md)
 [![Platform](https://img.shields.io/cocoapods/p/TextViewMaster.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
 ## Intro

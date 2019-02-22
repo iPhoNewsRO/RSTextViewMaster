@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "RSTextViewMaster"
-  s.version      = "2.0.0"
+  s.version      = "2.1.0"
   s.summary      = "RSTextViewMaster"
   s.description  = <<-DESC
                    Easy custom placeholder and growing (iMessage-like) UITextView with customisation 
