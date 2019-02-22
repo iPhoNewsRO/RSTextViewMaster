@@ -45,7 +45,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
     }
     
     private func commonInit() {
-        contentMode = .redraw
+        self.contentMode = .redraw
         NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextView.textDidChangeNotification, object: self)
         NotificationCenter.default.addObserver(self, selector: #selector(textDidEndEditing), name: UITextView.textDidEndEditingNotification, object: self)
     }
@@ -64,7 +64,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
                 guard let self = self, let delegate = self.delegate as? RSTextViewMasterDelegate else { return }
                 delegate.growingTextView?(growingTextView: self, willChangeHeight: height)
                 
-                if self.isScrolling() {
+                if !self.isScrolling() {
                     self.scrollToBottom()
                 }
                 
@@ -76,7 +76,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
             guard let delegate = delegate as? RSTextViewMasterDelegate else { return }
             delegate.growingTextView?(growingTextView: self, willChangeHeight: height)
             
-            if self.isScrolling() {
+            if !self.isScrolling() {
                 self.scrollToBottom()
             }
             
@@ -86,7 +86,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
     
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
-        if text.isEmpty {
+        if self.text.isEmpty {
             self.drawPlaceHolder(rect)
         }
     }
@@ -94,11 +94,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
 
 extension RSTextViewMaster {
     private func isScrolling() -> Bool {
-        if let constant = self.heightConstraint?.constant, constant < self.maxHeight + 1 {
-            return true
-        }
-        
-        return false
+        return self.heightConstraint?.constant == self.maxHeight
     }
     
     private func checkHeightConstraint() -> CGFloat {
@@ -117,7 +113,7 @@ extension RSTextViewMaster {
     }
     
     private func getHeight() -> CGFloat {
-        let size = sizeThatFits(CGSize(width: bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+        let size = self.sizeThatFits(CGSize(width: self.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
         var height = size.height
         
         height = self.minHeight > 0 ? max(height, self.minHeight) : height
@@ -140,10 +136,10 @@ extension RSTextViewMaster {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
         var attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: placeHolderColor,
+            .foregroundColor: self.placeHolderColor,
             .paragraphStyle: paragraphStyle
         ]
-        attributes[.font] = placeHolderFont
+        attributes[.font] = self.placeHolderFont
         
         return attributes
     }
@@ -159,7 +155,7 @@ extension RSTextViewMaster {
         gc.saveGState()
         defer { gc.restoreGState() }
         
-        self.placeHolder.draw(in: placeHolderRect, withAttributes: getPlaceHolderAttribues())
+        self.placeHolder.draw(in: placeHolderRect, withAttributes: self.getPlaceHolderAttribues())
     }
 }
 
@@ -171,10 +167,10 @@ extension RSTextViewMaster {
     @objc private func textDidChange(notification: Notification) {
         
         if let sender = notification.object as? RSTextViewMaster, sender == self {
-            if self.maxLength > 0 && text.count > self.maxLength {
-                let endIndex = text.index(text.startIndex, offsetBy: self.maxLength)
-                text = String(text[..<endIndex])
-                undoManager?.removeAllActions()
+            if self.maxLength > 0 && self.text.count > self.maxLength {
+                let endIndex = self.text.index(self.text.startIndex, offsetBy: self.maxLength)
+                self.text = String(text[..<endIndex])
+                self.undoManager?.removeAllActions()
             }
             
             self.setNeedsDisplay()
@@ -183,12 +179,12 @@ extension RSTextViewMaster {
         let pos = self.endOfDocument
         let currentRect = self.caretRect(for: pos)
         self.previousRect = self.previousRect.origin.y == 0.0 ? currentRect : previousRect
-        if (currentRect.origin.y > previousRect.origin.y) {
+        if (currentRect.origin.y > self.previousRect.origin.y) {
             if self.isScrolling() {
                 self.flashScrollIndicators()
             }
         }
-        previousRect = currentRect
+        self.previousRect = currentRect
     }
 }
 
