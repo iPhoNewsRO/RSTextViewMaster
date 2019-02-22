@@ -1,5 +1,5 @@
 # RSTextViewMaster
-[![Version](https://img.shields.io/cocoapods/v/TextViewMaster.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
+[![Version](https://img.shields.io/cocoapods/v/RSTextViewMaster.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
 [![License: MIT](https://img.shields.io/badge/license-GNU-blue.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster/blob/master/LICENSE)
 [![Platform](https://img.shields.io/cocoapods/p/TextViewMaster.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://github.com/iPhoNewsRO/RSTextViewMaster)
@@ -56,9 +56,9 @@ inputView.addSubview(textViewMaster)
 You will have to set constrains by code if you take this approach.
         
 ### Storyboard
-1. TextView Set class to "RSTextViewMaster".
-2. Set delegate to it's view controller
-3. Set a height constraint but check "remove at runtime". This way Xcode won't bother you and the textview will work like magic
+> 1. TextView Set class to "RSTextViewMaster".
+> 2. Set delegate to it's view controller
+> 3. Set a height constraint but check "remove at runtime". This way Xcode won't bother you and the textview will work like magic
 
 Check the demo for an example.
 
