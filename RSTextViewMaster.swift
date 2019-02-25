@@ -90,6 +90,12 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
             self.drawPlaceHolder(rect)
         }
     }
+    
+    public func setText(text: String) {
+        self.setNeedsDisplay()
+        
+        self.text = text
+    }
 }
 
 extension RSTextViewMaster {

@@ -31,6 +31,11 @@ pod 'RSTextViewMaster'
 ```ruby
 import RSTextViewMaster
 ```
+
+### Set text
+
+For the moment, please use ```textView.setText(text: String)``` to update textview's text. By using ```.text``` settler, the placeholder won't be removed. This will get fixed in future updates.
+
 ### Customization
 ```ruby
     isAnimate: Bool = true                                          
