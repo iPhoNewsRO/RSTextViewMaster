@@ -86,7 +86,7 @@ public class RSTextViewMaster: UITextView, UIScrollViewDelegate {
     
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
-        if self.text.isEmpty {
+        if self.text.isEmpty || self.text == "" {
             self.drawPlaceHolder(rect)
         }
     }
