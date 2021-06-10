@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "RSTextViewMaster"
-  s.version      = "2.1.3"
+  s.version      = "2.2"
   s.summary      = "RSTextViewMaster"
   s.description  = <<-DESC
                    Easy custom placeholder and growing (iMessage-like) UITextView with customisation 
@@ -21,7 +21,7 @@ DESC
   s.author       = { "Radu Ursache" => "radu_u@me.com" }
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/iPhoNewsRO/RSTextViewMaster.git", :tag => "#{s.version}" }
-  s.source_files  = "RSTextViewMaster.swift"
+  s.source_files  = "Sources/RSTextViewMaster.swift"
   
   s.framework  = "UIKit"
 
